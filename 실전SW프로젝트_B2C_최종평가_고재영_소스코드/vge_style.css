@@ -1,0 +1,106 @@
+/* vge_style.css */
+
+/* top menu group */
+
+#top_menu {
+	position: absolute;
+	left: 10px; top: 10px; width: 1100px; height: 50px;
+	border: 1px solid white;
+	background-color: lightgrey;	
+}
+
+#tm_filename {
+	position: absolute;
+	left: 16px; top: 4px;
+	font: bold 28px "Arial Black";
+}
+
+.tmc_normal {
+	position: absolute;
+	top: 6px; width: 32px;
+	border: 3px solid white;
+}
+
+
+/* mode menu group */
+
+#mode_menu {
+	position: absolute;
+	left: 10px; top: 70px; width: 50px; height: 600px;
+	border: 1px solid white;
+	background-color: lightgrey;	
+}
+
+.mmc_normal {
+	position: absolute;
+	left: 5px; width: 32px;
+	border: 3px solid white;
+}
+
+.mmc_select {
+	position: absolute;
+	left: 5px; width: 32px;
+	border: 3px solid red;
+}
+
+/* editor canvas group */
+
+#editor_canvas {
+	position: absolute;
+	left: 70px; top: 70px; width: 800px; height: 600px;
+	border: 1px solid black;
+}
+
+/* editor property group */
+
+#editor_property {
+	position: absolute;
+	left: 880px; top: 70px;	width: 230px; height: 600px;
+	border: 1px solid white;
+	background-color: lightgrey;	
+}
+
+.epc_normal {
+	position: absolute;
+	top: 5px; width: 32px;
+	border: 3px solid white;
+}
+
+.epv_block {
+	margin-top: 10px;
+}
+
+#ep_values {
+	position: absolute;
+	left: 5px; top: 40px;
+}
+
+span.epvt1 {
+	display: inline-block;
+	width: 50px;
+	text-align: right;
+}
+
+input[type=number] {
+	width: 42px;
+}
+
+span.epvt2 {
+	display: inline-block;
+	width: 80px;
+	text-align: right;
+}
+
+select {
+	width: 131px;
+}
+
+span.epvt3 {
+	display: inline-block;
+	width: 161px;
+	text-align: right;
+}
+
+#editor_property_text {
+	width: 153px;
+}

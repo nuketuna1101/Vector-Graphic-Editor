@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vector Graphic Editor prod by jyko</title>
+	<link type="text/css" rel="stylesheet" href="vge_style.css">
+</head>
+<body id="editor">
+
+	<!-- 구성 :  -->
+
+	<div id="top_menu">
+		<div id="tm_filename">JYKO Graphic Editor</div>
+		<input type="image" id="tm_new" title="new" src="image/icon_new.png" onclick="">
+		<input type="image" id="tm_load" title="load" src="image/icon_load.png" onclick="load();">
+		<input type="image" id="tm_save" title="save" src="image/icon_save.png" onclick="save();">
+		<input type="image" id="tm_undo" title="undo" src="image/icon_undo.png" onclick="">
+		<input type="image" id="tm_redo" title="redo" src="image/icon_redo.png" onclick="">
+		<a id="editor_download">
+			<input type="image" id="tm_download" title="download" src="image/icon_download.png" onclick="downloadImg();">
+		</a>
+	</div>
+
+	<div id="mode_menu">
+		<input type="image" id="mm_select" title="select" src="image/icon_select.png" onclick="onClickModeMenu('mm_select');">
+		<input type="image" id="mm_line" title="line" src="image/icon_line.png" onclick="onClickModeMenu('mm_line');">
+		<input type="image" id="mm_rect" title="rectangle" src="image/icon_rect.png" onclick="onClickModeMenu('mm_rect');">
+		<input type="image" id="mm_ellipse" title="ellipse" src="image/icon_ellipse.png" onclick="onClickModeMenu('mm_ellipse');">
+		<input type="image" id="mm_text" title="text" src="image/icon_text.png" onclick="onClickModeMenu('mm_text');">
+		<input type="image" id="mm_image" title="image" src="image/icon_image.png" onclick="onClickModeMenu('mm_image');">
+	</div>
+
+	<!-- Canvas Image -->
+	<div id="editor_canvas">
+		<canvas id="myCanvas"> </canvas>
+	</div>
+	<!-- Property Edit -->
+	<div id="editor_property">
+		<!-- delete와 z-order handling -->
+		<div id="ep_zindex">
+			<input type="image" id="ep_delete" title="delete" src="image/icon_delete.png" onclick="deleteObj();">
+			<input type="image" id="ep_z_first" title="move to top" src="image/icon_z_first.png" onclick="zOrderFirst();">
+			<input type="image" id="ep_z_up" title="move up" src="image/icon_z_up.png" onclick="zOrderOneLayerUp();">
+			<input type="image" id="ep_z_last" title="move to last" src="image/icon_z_last.png" onclick="zOrderLast();">
+			<input type="image" id="ep_z_down" title="move down" src="image/icon_z_down.png" onclick="zOrderOneLayerDown();">
+		</div>
+		<!-- editor property의 편집창 속성값들 -->
+		<div id="ep_values">
+			<div id="epv_line" class="epv_block">
+				<div>
+					<span class="epvt1">x1:</span>
+					<input type="number" id="editor_property_x1" oninput="editPropValue()">
+					<span class="epvt1">y1:</span>
+					<input type="number" id="editor_property_y1" oninput="editPropValue()">
+				</div>
+				<div>
+					<span class="epvt1">x2:</span>
+					<input type="number" id="editor_property_x2" oninput="editPropValue()">
+					<span class="epvt1">y2:</span>
+					<input type="number" id="editor_property_y2" oninput="editPropValue()">
+				</div>				
+			</div>
+			<div id="epv_position" class="epv_block">
+				<div>
+					<span class="epvt1">cx:</span>
+					<input type="number" id="editor_property_centerX" oninput="editPropValue()">
+					<span class="epvt1">cy:</span>
+					<input type="number" id="editor_property_centerY" oninput="editPropValue()">
+				</div>
+				<div>
+					<span class="epvt1">width:</span>
+					<input type="number" id="editor_property_width" oninput="editPropValue()">
+					<span class="epvt1">height:</span>
+					<input type="number" id="editor_property_height" oninput="editPropValue()">
+				</div>
+			</div>
+			<div id="epv_border" class="epv_block">
+				<div>
+					<span class="epvt3">border-width:</span>
+					<input type="number" id="editor_property_borderwidth" oninput="editPropValue()">
+				</div>
+				<div>
+					<span class="epvt3">border-color:</span>
+					<input type="color" id="editor_property_bordercolor" oninput="editPropValue()">
+				</div>
+			</div>
+			<div id="epv_fill" class="epv_block">
+				<span class="epvt3">fill-color:</span>
+				<input type="color" id="editor_property_fillcolor" oninput="editPropValue()">
+			</div>
+			<div id="epv_text" class="epv_block">
+				<span class="epvt1">text:</span>
+				<input type="text" id="editor_property_text" onchange="editPropValue()">
+			</div>
+			<div id="epv_font" class="epv_block">
+				<div>
+					<span class="epvt2">font:</span>
+					<select id="editor_property_font" onchange="editPropValue()">
+						<option value="0">맑은 고딕</option>
+						<option value="1">굴림</option>
+						<option value="2">돋움</option>
+						<option value="3">바탕</option>
+						<option value="4" selected>궁서</option>
+						<option value="5">Arial</option>
+						<option value="6">Comic Sans MS</option>
+						<option value="7">Courier New</option>
+						<option value="8">Tahoma</option>
+						<option value="9">Times New Roman</option>
+						<option value="10">Verdana</option>					
+					</select>
+				</div>
+				<div>
+					<span class="epvt2">font-size:</span>
+					<select id="editor_property_fontsize" onchange="editPropValue()">
+						<option value="0">8pt</option>
+						<option value="1">9pt</option>
+						<option value="2">10pt</option>
+						<option value="3" selected>12pt</option>
+						<option value="4">16pt</option>
+						<option value="5">24pt</option>
+						<option value="6">36pt</option>
+						<option value="7">54pt</option>
+						<option value="8">80pt</option>
+					</select>
+				</div>
+			</div>
+			<div id="epv_shadow" class="epv_block">
+				<span class="epvt2">shadow:</span>
+				<select id="editor_property_shadow" onchange="editPropValue()">
+					<option value="0" selected>none</option>
+					<option value="1">black</option>
+					<option value="2">grey</option>
+					<option value="3">white</option>
+					<option value="4">red</option>
+					<option value="5">green</option>
+					<option value="6">blue</option>
+					<option value="7">cyan</option>
+					<option value="8">magenta</option>
+					<option value="9">yellow</option>
+				</select>
+			</div>
+		</div>
+
+		<!-- Scripts -->
+		<script src="JavaScripts/canvasManager.js"></script>
+		<script src="JavaScripts/cpManager.js"></script>
+		<script src="JavaScripts/dataManager.js"></script>
+		<script src="JavaScripts/editor.js"></script>
+		<script src="JavaScripts/functions.js"></script>
+		<!-- <script src="JavaScripts/imageManager.js"></script> -->
+		<script src="JavaScripts/propertyManager.js"></script>
+		<script src="JavaScripts/textboxManager.js"></script>
+		<script src="JavaScripts/uiManager.js"></script>
+		<!-- <script src="JavaScripts/undoManager.js"></script> -->
+		<script src="JavaScripts/zorderManager.js"></script>
+	</body>
+</html>
